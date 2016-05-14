@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +25,10 @@ import java.util.List;
 /**
  * Created by 0x410c on 05/05/16.
  */
-//@// TODO: 06/05/16 update the code bc 
+//@// TODO: 06/05/16 update the code bc
 // org.apache.http.legacy has been deprecated, use URL() and reimplement this shit
 
-    /// complete bullshit bc
+/// complete bullshit bc
 public class GetAccessToken {
     static InputStream is = null;
     static JSONObject jObj = null;
@@ -55,8 +54,15 @@ public class GetAccessToken {
             params.add(new BasicNameValuePair("code", token));
             params.add(new BasicNameValuePair("client_id", client_id));
             if(authFor!= SimpleOAuth.SERVER.OUTLOOK)    //outlook mobile client don't need client secret
+            {
                 params.add(new BasicNameValuePair("client_secret", client_secret));
-            params.add(new BasicNameValuePair("redirect_uri", URLEncoder.encode(redirect_uri)));
+                params.add(new BasicNameValuePair("redirect_uri", redirect_uri));
+            }
+            else
+            {
+                // params.add(new BasicNameValuePair("client_secret", client_secret));
+                params.add(new BasicNameValuePair("redirect_uri", redirect_uri)); //use url encode if outlook
+            }
             params.add(new BasicNameValuePair("grant_type", grant_type));
 
             httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");

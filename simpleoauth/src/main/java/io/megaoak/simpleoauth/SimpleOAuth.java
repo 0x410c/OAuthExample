@@ -186,7 +186,14 @@ public class SimpleOAuth implements WebViewAuthResult{
         dialog = dialogBuilder.create();
 
         //start the authorisation process
-        webView.loadUrl(OAUTH_URL+"?redirect_uri="+REDIRECT_URI+"&response_type=code&client_id="+CLIENT_ID+"&scope="+OAUTH_SCOPE);
+        if(OAUTH_SCOPE.equals("")) { //box doesn't need scope
+            webView.loadUrl(OAUTH_URL + "?redirect_uri=" + REDIRECT_URI + "&response_type=code&client_id=" + CLIENT_ID);
+        }
+        else
+        {
+            webView.loadUrl(OAUTH_URL + "?redirect_uri=" + REDIRECT_URI + "&response_type=code&client_id=" + CLIENT_ID + "&scope=" + OAUTH_SCOPE);
+        }
+
         //show the dialog
         dialog.show();
     }
